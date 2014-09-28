@@ -11,7 +11,9 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published polls."""
-        return Poll.objects.order_by('-pub_date')[:5]
+        return Poll.objects.filter(
+                pub_date__lte=timezone.now()
+                ).order_by('-pub_date')[:5]
 
 
 class DetailView(generic.DetailView):
